@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Disposable Blob Site</title>
+</head>
+<body>
+
+<script>
+(function () {
+
+    const htmlContent = `
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+body {
+    margin: 0;
+    overflow: hidden;
+}
+iframe {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+</style>
+</head>
+<body>
+
+<iframe id="siteFrame"
+src="https://secure-stream-browser--leocherubino2.replit.app/?url=https://discord.com/">
+</iframe>
+
+<script>
+/* Leave confirmation */
+window.addEventListener("beforeunload", function (e) {
+    e.preventDefault();
+    e.returnValue = "";
+});
+
+/* Ctrl+F fullscreen */
+document.addEventListener("keydown", function(e) {
+    if (e.ctrlKey && e.key.toLowerCase() === "f") {
+        e.preventDefault();
+        const frame = document.getElementById("siteFrame");
+        if (frame.requestFullscreen) {
+            frame.requestFullscreen();
+        } else if (frame.webkitRequestFullscreen) {
+            frame.webkitRequestFullscreen();
+        } else if (frame.msRequestFullscreen) {
+            frame.msRequestFullscreen();
+        }
+    }
+});
+<\/script>
+
+</body>
+</html>
+    `;
+
+    const blob = new Blob([htmlContent], { type: "text/html" });
+    const blobUrl = URL.createObjectURL(blob);
+
+    window.open(blobUrl, "_blank");
+
+    // Destroy it immediately so it can't be reloaded
+    URL.revokeObjectURL(blobUrl);
+
+})();
+</script>
+
+</body>
+</html>
